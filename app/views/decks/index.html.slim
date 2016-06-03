@@ -1,0 +1,24 @@
+h1 Decks
+
+table
+  thead
+    tr
+      th Title
+      th
+      th
+      th
+
+  tbody
+    - @decks.each do |deck|
+      tr
+        td = deck.name
+        td
+          - deck.images.each do |image|
+            = image_tag(image.thumb)
+        td = link_to 'Show', deck
+        td = link_to 'Edit', edit_deck_path(deck)
+        td = link_to 'Destroy', deck, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Deck', new_deck_path

@@ -1,0 +1,31 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @deck.name
+
+div
+  - @deck.images.each_with_index do |image, index|
+    div 
+      = image_tag(image.thumb)
+      = link_to "Delete", deck_image_path(@deck, index), :method => :delete, data: { confirm: "Are you sure you want to delete this image?" }
+
+= link_to 'Edit', edit_deck_path(@deck)
+'|
+= link_to 'Back', decks_path
+
+
+h1 Add more images
+
+= form_for @deck, url: deck_images_path(@deck), method: :post do |f|
+  - if @deck.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@deck.errors.count, "error")} prohibited this deck from being saved:"
+      ul
+        - @deck.errors.full_messages.each do |message|
+          li = message
+  .field
+    = f.file_field :images, multiple: true
+
+  .actions = f.submit "Add More Images"
+
